@@ -1,7 +1,31 @@
 ### Index
 
-GET http://localhost:3000/all_products
+GET http://localhost:3000/product
 
-### Show
+### Create
 
-GET http://localhost:3000/any_product
+POST http://localhost:3000/product
+Content-Type: application/json
+
+{
+  "name": "dumbbells", 
+  "price": 399.99, 
+  "image_url": "https://post.healthline.com/wp-content/uploads/2020/10/458490-These-Are-the-12-Best-Dumbbells-to-Use-At-Home-According-to-A-Trainer_ProductShot_Yes4All-Adjustable-Dumbbells.png", 
+  "description": "A free weight used during exercise or muscle-building. It comes in a variety of weights and sizes."
+}
+
+### Show 
+GET http://localhost:3000/any_product/3
+
+### Patch
+
+PATCH http://localhost:3000/any_product/2
+Content-Type: application/json
+
+{
+"price": "1400"
+}
+
+### Delete 
+
+DELETE http://localhost:3000/any_product/6
