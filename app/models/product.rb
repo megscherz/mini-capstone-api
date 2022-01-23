@@ -18,4 +18,8 @@ class Product < ApplicationRecord
   def total
     price + tax
   end
+
+  def average
+    price.all / product.count
+  end
 end

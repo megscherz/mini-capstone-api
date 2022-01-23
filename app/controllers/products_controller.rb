@@ -3,6 +3,10 @@ class ProductsController < ApplicationController
     products = Product.all
     if params[:search]
       products = products.where("name iLIKE ?", "%#{params[:search]}%")
+      products = Product.where("name LIKE ?", "T%")
+      products = Product.all.order(id: :desc).first(3)
+      products = Product.average(:price)
+      products = Product.where("description LIKE ? OR description LIKE ?", "%awesome%", "%legendary%")
     end
 
     if params[:discount]
@@ -17,6 +21,10 @@ class ProductsController < ApplicationController
       end
     else
       products = products.order(:id)
+    end
+
+    if params[:average]
+      products = Product.average("subtotal")
     end
 
     render json: products
