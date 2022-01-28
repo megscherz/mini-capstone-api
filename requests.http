@@ -1,32 +1,103 @@
-### Index
+@jwt = eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NDM0ODY5Mjd9.d8zvcUc7NcECKJC4shIpSZD6Dd6x5_SjI92Ndj3EFBA 
 
-GET http://localhost:3000/products?average
+@domain = http://localhost:3000/
 
-### Create
+### Product Index
 
-POST http://localhost:3000/products
+GET {{ domain }}/products?average
+
+### Product Create
+
+POST {{ domain }}/products
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NDMzMDk5NTh9.LuxYkSZZ02VtfPTEfR9MMGD85BFevf48RK-yEplZ4sQ
 
 {
-  "name": "dumbbells", 
-  "price": 0, 
-  "image_url": " ", 
-  "description": " ",
-  "quantity": 0
+  "name": "Adjustable flat bench", 
+  "price": 250, 
+  "image_url": "https://m.media-amazon.com/images/I/71dCvGuqGWL._AC_SL1500_.jpg", 
+  "description": "An adjustable bench that can be used for various exercises.",
+  "quantity": 1,
+  "supplier_id": 2
 }
 
-### Show 
-GET http://localhost:3000/any_products/7
+### Product Show 
+GET {{ domain }}/any_products/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDMxNDAxNzV9.hLWVnIMSgJtbMB7oWufVkith0NTMbqLG5jtr4S4EiXA
 
-### Patch
+### Product Update
 
-PATCH http://localhost:3000/any_products/2
+PATCH {{ domain }}/any_products/2
 Content-Type: application/json
 
 {
 "price": "1400"
 }
 
-### Delete 
+### Product Delete 
 
-DELETE http://localhost:3000/any_products/6
+DELETE {{ domain }}/any_products/6
+
+### Users create (signup)
+
+POST {{ domain }}/users
+Content-Type: application/json
+
+{
+  "name": "Danny Fry",
+  "email": "Danny@fry.com",
+  "password": "password",
+  "password_confirmation": "password",
+  "admin": true 
+}
+
+### Sessions create (login)
+
+POST {{ domain }}/sessions
+Content-Type: application/json
+
+{
+  "email": "Meghan@scherzer.com",
+  "password": "password"
+}
+
+### Order index
+
+GET {{ domain }}/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDMyMjMwNzJ9.jeglLA10OTJuzd7kDWDgFinABU28moW3lKdl7iD9acM
+
+### Order create
+
+POST {{ domain }}/orders
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NDMzMDk5NTh9.LuxYkSZZ02VtfPTEfR9MMGD85BFevf48RK-yEplZ4sQ
+
+{
+  "product_id": 5, 
+  "quantity": 10
+}
+
+### Order show
+
+GET {{ domain }}/orders/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE2NDMzMDk5NTh9.LuxYkSZZ02VtfPTEfR9MMGD85BFevf48RK-yEplZ4sQ
+
+### Carted products index
+
+GET {{ domain }}/carted_products
+Authorization: Bearer {{ jwt }}
+
+
+### Carted products create
+
+POST {{ domain }}/carted_products
+Content-Type: application/json
+Authorization: Bearer {{ jwt }}
+
+{
+  "user_id": 3,
+  "product_id": 2,
+  "quantity": 6,
+  "status": "carted",
+  "order_id": null
+}

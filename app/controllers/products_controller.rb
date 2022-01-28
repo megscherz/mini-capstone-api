@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_admin, except: [:index, :show]
+
   def index
     products = Product.all
     if params[:search]
@@ -31,40 +33,42 @@ class ProductsController < ApplicationController
   end
 
   def create
-    products = Product.new(
+    product = Product.new(
       name: params[:name],
       price: params[:price],
       description: params[:description],
       quantity: params[:quantity],
+      supplier_id: params[:supplier_id],
     )
-    if products.save
-      render json: products
+    if product.save
+      render json: product
     else
-      render json: { errors: products.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: product.errors.full_messages }, status: :unauthorized
     end
   end
 
   def show
-    products = Product.find(params[:id])
-    render json: products
+    product = Product.find(params[:id])
+    pp current_user
+    render json: product
   end
 
   def update
-    products = Product.find(params[:id])
-    products.name = params[:name] || products.name
-    products.price = params[:price] || products.price
-    products.description = params[:description] || products.description
-    products.quantity = params[:quantity] || products.quantity
-    if products.save
-      render json: products
+    product = Product.find(params[:id])
+    product.name = params[:name] || product.name
+    product.price = params[:price] || product.price
+    product.description = params[:description] || product.description
+    product.quantity = params[:quantity] || product.quantity
+    if product.save
+      render json: product
     else
-      render json: { errors: products.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: product.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
-    products = Product.find(params[:id])
-    products.destroy
+    product = Product.find(params[:id])
+    product.destroy
     render json: { message: "Your product has been desimated." }
   end
 end
